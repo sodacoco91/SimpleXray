@@ -139,6 +139,27 @@ class TProxyService : VpnService() {
                 return START_STICKY
             }
 
+            ACTION_START_ON_BOOT -> {
+                Log.d(TAG, "Received ACTION_START_ON_BOOT, starting connection")
+                logFileManager.clearLogs()
+                val prefs = Preferences(this)
+                if (prefs.disableVpn) {
+                    // Core-only mode
+                    serviceScope.launch { runXrayProcess() }
+                    val successIntent = Intent(ACTION_START)
+                    successIntent.setPackage(application.packageName)
+                    sendBroadcast(successIntent)
+
+                    @Suppress("SameParameterValue") val channelName = "nosocks"
+                    initNotificationChannel(channelName)
+                    createNotification(channelName)
+                } else {
+                    // VPN mode - startXray() 会自动连接
+                    startXray()
+                }
+                return START_STICKY
+            }
+
             else -> {
                 logFileManager.clearLogs()
                 startXray()
@@ -381,6 +402,7 @@ class TProxyService : VpnService() {
         const val ACTION_STOP: String = "com.simplexray.an.STOP"
         const val ACTION_LOG_UPDATE: String = "com.simplexray.an.LOG_UPDATE"
         const val ACTION_RELOAD_CONFIG: String = "com.simplexray.an.RELOAD_CONFIG"
+        const val ACTION_START_ON_BOOT: String = "ACTION_START_ON_BOOT"
         const val EXTRA_LOG_DATA: String = "log_data"
         private const val TAG = "VpnService"
         private const val BROADCAST_DELAY_MS: Long = 3000

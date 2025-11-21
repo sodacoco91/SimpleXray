@@ -252,6 +252,19 @@ fun SettingsScreen(
         PreferenceCategoryTitle(stringResource(R.string.general))
 
         ListItem(
+            headlineContent = { Text("开机自启 (Start on Boot)") },
+            supportingContent = { Text("系统启动后自动连接 VPN (Auto-connect VPN on system startup)") },
+            trailingContent = {
+                Switch(
+                    checked = settingsState.switches.startOnBootEnabled,
+                    onCheckedChange = {
+                        mainViewModel.setStartOnBootEnabled(it)
+                    }
+                )
+            }
+        )
+
+        ListItem(
             headlineContent = { Text(stringResource(R.string.use_template_title)) },
             supportingContent = { Text(stringResource(R.string.use_template_summary)) },
             trailingContent = {

@@ -92,6 +92,7 @@ class MainViewModel(application: Application) :
                 httpProxyEnabled = prefs.httpProxyEnabled,
                 bypassLanEnabled = prefs.bypassLan,
                 disableVpn = prefs.disableVpn,
+                startOnBootEnabled = prefs.startOnBoot,
                 themeMode = prefs.theme
             ),
             info = InfoStates(
@@ -185,6 +186,7 @@ class MainViewModel(application: Application) :
                 httpProxyEnabled = prefs.httpProxyEnabled,
                 bypassLanEnabled = prefs.bypassLan,
                 disableVpn = prefs.disableVpn,
+                startOnBootEnabled = prefs.startOnBoot,
                 themeMode = prefs.theme
             ),
             info = _settingsState.value.info.copy(
@@ -481,6 +483,13 @@ class MainViewModel(application: Application) :
         prefs.disableVpn = enabled
         _settingsState.value = _settingsState.value.copy(
             switches = _settingsState.value.switches.copy(disableVpn = enabled)
+        )
+    }
+
+    fun setStartOnBootEnabled(enabled: Boolean) {
+        prefs.startOnBoot = enabled
+        _settingsState.value = _settingsState.value.copy(
+            switches = _settingsState.value.switches.copy(startOnBootEnabled = enabled)
         )
     }
 

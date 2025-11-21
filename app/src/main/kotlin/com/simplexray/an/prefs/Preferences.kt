@@ -300,6 +300,12 @@ class Preferences(context: Context) {
             setValueInProvider(THEME, value.value)
         }
 
+    var startOnBoot: Boolean
+        get() = getBooleanPref(START_ON_BOOT, false)
+        set(enable) {
+            setValueInProvider(START_ON_BOOT, enable)
+        }
+
     companion object {
         const val SOCKS_ADDR: String = "SocksAddr"
         const val SOCKS_PORT: String = "SocksPort"
@@ -328,6 +334,7 @@ class Preferences(context: Context) {
         const val API_PORT: String = "ApiPort"
         const val BYPASS_SELECTED_APPS: String = "BypassSelectedApps"
         const val THEME: String = "Theme"
+        const val START_ON_BOOT: String = "StartOnBoot"
         private const val TAG = "Preferences"
     }
 }

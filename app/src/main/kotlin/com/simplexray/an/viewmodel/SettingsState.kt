@@ -14,6 +14,7 @@ data class SwitchStates(
     val httpProxyEnabled: Boolean,
     val bypassLanEnabled: Boolean,
     val disableVpn: Boolean,
+    val startOnBootEnabled: Boolean,
     val themeMode: ThemeMode
 )
 
